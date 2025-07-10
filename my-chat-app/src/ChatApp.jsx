@@ -43,7 +43,6 @@ export default function ChatApp() {
     async function initChat() {
       try {
         const token = await getUserToken(USER_ID);
-
         await chatClient.connectUser(
           {
             id: USER_ID,
@@ -53,8 +52,8 @@ export default function ChatApp() {
           token
         );
 
-        const channel = chatClient.channel('messaging', 'general-chat', {
-          name: 'General Chat',
+        const channel = chatClient.channel('messaging', 'stream-chat', {
+          name: 'Chat',
           members: [USER_ID],
         });
 
@@ -76,6 +75,7 @@ export default function ChatApp() {
   if (!clientReady || !channel) return <LoadingIndicator />;
 
   return (
+     <div className="ChatApp">
     <Chat client={chatClient} theme="str-chat__theme-dark">
       <Channel channel={channel}>
         <Window>
@@ -86,5 +86,6 @@ export default function ChatApp() {
         <Thread />
       </Channel>
     </Chat>
+    </div>
   );
 }
